@@ -2,7 +2,7 @@ import express from 'express'
 import content from '../middleware/content.js'
 import * as auth from '../middleware/auth.js'
 import admin from '../middleware/admin.js'
-import upload from '../middleware/upload.js'
+// import upload from '../middleware/upload.js'
 import {
   createQa,
   getQa,
@@ -20,6 +20,6 @@ router.get('/', getQa)
 router.get('/all', getAllQa)
 router.get('/:id', getOneQa)
 router.delete('/:id', auth.jwt, admin, deleteQa)
-router.patch('/:id', content('multipart/form-data'), auth.jwt, admin, upload, editQa)
+router.patch('/:id', auth.jwt, admin, editQa)
 
 export default router

@@ -51,6 +51,7 @@ export const getOneQa = async (req, res) => {
 }
 
 export const editQa = async (req, res) => {
+  console.log(req.body.reply)
   try {
     const data = {
       reply: req.body.reply,
