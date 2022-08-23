@@ -1,0 +1,111 @@
+import mongoose from 'mongoose'
+import validator from 'validator'
+
+const schema = new mongoose.Schema({
+  account: {
+    type: String,
+    required: [true, '缺少帳號欄位'],
+    minlength: [4, '帳號必須 4 個字以上'],
+    maxlength: [20, '帳號必須 20 個字以下'],
+    unique: true,
+    match: [/^[A-Za-z0-9]+$/, '帳號格式錯誤']
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: [true, '缺少信箱欄位'],
+    unique: true,
+    validate: {
+      validator (email) {
+        return validator.isEmail(email)
+      },
+      message: '信箱格式錯誤'
+    }
+  },
+  name: {
+    type: String,
+    required: [true, '缺少姓名']
+  },
+  tokens: {
+    type: [String]
+  },
+  smartphone: {
+    type: String,
+    match: [/^[0-9]+$/, '帳號格式錯誤']
+  },
+  telephone: {
+    type: String,
+    match: [/^[0-9]+$/, '帳號格式錯誤']
+  },
+  cart: {
+    type: [
+      {
+        product: {
+          type: mongoose.ObjectId,
+          ref: 'products',
+          required: [true, '缺少商品欄位']
+        },
+        quantity: {
+          type: Number,
+          required: [true, '缺少數量欄位']
+        }
+      }
+    ]
+  },
+  orderInfo: {
+    type: [
+      {
+        lastName: {
+          type: String
+          // ref: 'products',
+          // required: [true, '缺少訂購人姓氏']
+        },
+        firstName: {
+          type: String,
+          // ref: 'products',
+          required: [true, '缺少訂購人名字']
+        },
+        phone: {
+          type: Number,
+          required: [true, '缺少訂購人電話']
+        },
+        email: {
+          type: String,
+          required: [true, '缺少訂購人信箱'],
+          validate: {
+            validator (email) {
+              return validator.isEmail(email)
+            },
+            message: '信箱格式錯誤'
+          }
+        }
+      }
+    ]
+  },
+  collections: {
+    type: [
+      {
+        product: {
+          type: mongoose.ObjectId,
+          ref: 'products',
+          required: [true, '缺少商品欄位']
+        },
+        quantity: {
+          type: Number,
+          required: [true, '缺少數量欄位']
+        }
+      }
+    ]
+  },
+  role: {
+    // 0 = 使用者
+    // 1 = 管理員
+    type: Number,
+    default: 0
+  }
+}, { versionKey: false })
+
+export default mongoose.model('users', schema)
