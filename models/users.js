@@ -10,6 +10,9 @@ const schema = new mongoose.Schema({
     unique: true,
     match: [/^[A-Za-z0-9]+$/, '帳號格式錯誤']
   },
+  image: {
+    type: String
+  },
   password: {
     type: String,
     required: true

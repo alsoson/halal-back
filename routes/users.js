@@ -2,11 +2,14 @@ import express from 'express'
 import * as auth from '../middleware/auth.js'
 import content from '../middleware/content.js'
 import admin from '../middleware/admin.js'
+import upload from '../middleware/upload.js'
+
 import {
   register,
   login,
   logout,
   getAllUsers,
+  editUser,
   // admin,
   deleteUser,
   extend,
@@ -25,8 +28,9 @@ import {
 const router = express.Router()
 
 router.post('/', content('application/json'), register)
+router.patch('/', content('multipart/form-data'), auth.jwt, upload, editUser)
 router.get('/', auth.jwt, getUser)
-router.post('/login', content('application/json'), auth.login, login)
+router.post('/login', content('application/json'), auth.login, upload, login)
 router.delete('/logout', auth.jwt, logout)
 // router.get('/all', getUser)
 router.get('/all', getAllUsers)

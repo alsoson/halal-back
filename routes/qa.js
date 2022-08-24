@@ -20,6 +20,6 @@ router.get('/', getQa)
 router.get('/all', getAllQa)
 router.get('/:id', getOneQa)
 router.delete('/:id', auth.jwt, admin, deleteQa)
-router.patch('/:id', auth.jwt, admin, editQa)
+router.patch('/:id', content('application/json'), auth.jwt, admin, editQa)
 
 export default router

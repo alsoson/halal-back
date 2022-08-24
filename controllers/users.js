@@ -1,5 +1,6 @@
 import users from '../models/users.js'
 import products from '../models/products.js'
+import orders from '../models/orders.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -46,6 +47,7 @@ export const login = async (req, res) => {
       result: {
         token,
         account: req.user.account,
+        image: req.user.image,
         email: req.user.email,
         name: req.user.name,
         cart: req.user.cart.length,
@@ -70,6 +72,39 @@ export const logout = async (req, res) => {
   }
 }
 
+export const editUser = async (req, res) => {
+  console.log('1234')
+  try {
+    // await users.findOneAndUpdate(
+    //   { _id: req.user._id },
+    //   {
+    //     $set: {
+    //       // $ 代表符合陣列搜尋條件的索引
+    //       name: req.body.name,
+    //       smartphone: req.body.smartphone,
+    //       telephone: req.body.telephone,
+    //       email: req.body.email,
+    //       image: req.file?.path || ''
+    //     }
+    //   }
+    // )
+    const data = {
+      name: req.body.name,
+      smartphone: req.body.smartphone,
+      telephone: req.body.telephone,
+      email: req.body.email,
+      image: req.file?.path || ''
+    }
+    // console.log(req.file.path)
+    if (req.file) data.image = req.file.path
+    console.log(req.user._id)
+    const result = await users.findByIdAndUpdate({ _id: req.user._id }, data, { new: true })
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    res.status(500).send({ success: false, message: error })
+  }
+}
+
 export const getAllUsers = async (req, res) => {
   try {
     const result = await users.find()
@@ -84,7 +119,7 @@ export const getUser = async (req, res) => {
     // console.log('try')
     // console.log(req.user._id)
     const result = await users.findById(req.user._id)
-    console.log(result)
+    // console.log(result)
     res.status(200).send({ success: true, message: '', result })
     // return result
   } catch (error) {
@@ -95,7 +130,7 @@ export const getUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     await users.findByIdAndDelete(req.params.id)
-    // await orders.deleteMany({user : req.params.id})
+    await orders.deleteMany({ user: req.params.id })
     res.status(200).send({ success: true, message: '' })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
@@ -238,8 +273,8 @@ export const addCollection = async (req, res) => {
 
 export const deleteCollection = async (req, res) => {
   // console.log('1234')
-  console.log(req.params.id)
-  console.log(users)
+  // console.log(req.params.id)
+  // console.log(users)
   try {
     await users.findOneAndUpdate(
       { _id: req.user._id, 'collections.product': req.params.id },
@@ -298,8 +333,8 @@ export const editOrder = async (req, res) => {
 }
 
 export const addOrder = async (req, res) => {
-  console.log(req.body)
-  console.log(req.user._id)
+  // console.log(req.body)
+  // console.log(req.user._id)
   try {
     req.user.orderInfo.push({
       // product: req.body.product,
@@ -316,7 +351,7 @@ export const addOrder = async (req, res) => {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       const message = error.errors[key].message
-      console.log(error)
+      // console.log(error)
       return res.status(400).send({ success: false, message })
     } else {
       res.status(500).send({ success: false, message: '伺服器錯誤' })
