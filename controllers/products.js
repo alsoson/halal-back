@@ -11,7 +11,17 @@ export const createProduct = async (req, res) => {
       description: req.body.description,
       image: req.file?.path || '',
       sell: req.body.sell,
-      category: req.body.category
+      category: req.body.category,
+      dayoneone: req.body.dayoneone,
+      dayonetwo: req.body.dayonetwo,
+      dayonethree: req.body.dayonethree,
+      dayonefour: req.body.dayonefour,
+      dayonefive: req.body.dayonefive,
+      daytwoone: req.body.daytwoone,
+      daytwotwo: req.body.daytwotwo,
+      daytwothree: req.body.daytwothree,
+      daytwofour: req.body.daytwofour,
+      daytwofive: req.body.daytwofive
     })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
@@ -64,7 +74,17 @@ export const editProduct = async (req, res) => {
       description: req.body.description,
       sell: req.body.sell,
       image: req.file?.path || '',
-      category: req.body.category
+      category: req.body.category,
+      dayoneone: req.body.dayoneone,
+      dayonetwo: req.body.dayonetwo,
+      dayonethree: req.body.dayonethree,
+      dayonefour: req.body.dayonefour,
+      dayonefive: req.body.dayonefive,
+      daytwoone: req.body.daytwoone,
+      daytwotwo: req.body.daytwotwo,
+      daytwothree: req.body.daytwothree,
+      daytwofour: req.body.daytwofour,
+      daytwofive: req.body.daytwofive
     }
     if (req.file) data.image = req.file.path
     const result = await products.findByIdAndUpdate(req.params.id, data, { new: true })

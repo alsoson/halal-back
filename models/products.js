@@ -32,7 +32,38 @@ const schema = new mongoose.Schema({
   sell: {
     type: Boolean,
     default: false
+  },
+  dayoneone: {
+    type: String
+  },
+  dayonetwo: {
+    type: String
+  },
+  dayonethree: {
+    type: String
+  },
+  dayonefour: {
+    type: String
+  },
+  dayonefive: {
+    type: String
+  },
+  daytwoone: {
+    type: String
+  },
+  daytwotwo: {
+    type: String
+  },
+  daytwothree: {
+    type: String
+  },
+  daytwofour: {
+    type: String
+  },
+  daytwofive: {
+    type: String
   }
+
 }, { versionKey: false })
 
 export default mongoose.model('products', schema)
