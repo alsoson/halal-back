@@ -43,7 +43,7 @@ export const getAllQa = async (req, res) => {
 export const getOneQa = async (req, res) => {
   try {
     const result = await qa.findById(req.params.id)
-    console.log(result)
+    // console.log(result)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
@@ -51,7 +51,7 @@ export const getOneQa = async (req, res) => {
 }
 
 export const editQa = async (req, res) => {
-  console.log(req.body.reply)
+  // console.log(req.body.reply)
   try {
     const data = {
       reply: req.body.reply,

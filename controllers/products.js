@@ -56,7 +56,7 @@ export const getAllProducts = async (req, res) => {
 export const getProduct = async (req, res) => {
   try {
     const result = await products.findById(req.params.id)
-    console.log(result)
+    // console.log(result)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })

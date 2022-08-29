@@ -97,7 +97,7 @@ export const editUser = async (req, res) => {
     }
     // console.log(req.file.path)
     if (req.file) data.image = req.file.path
-    console.log(req.user._id)
+    // console.log(req.user._id)
     const result = await users.findByIdAndUpdate({ _id: req.user._id }, data, { new: true })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
@@ -260,7 +260,7 @@ export const addCollection = async (req, res) => {
     await req.user.save()
     res.status(200).send({ success: true, message: '', result: req.user.collections.length })
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       const message = error.errors[key].message
